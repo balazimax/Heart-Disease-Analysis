@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Heart Risk Intake Form</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 2rem; }
+    form { max-width: 680px; }
+    fieldset { border: 1px solid #ddd; padding: 1rem 1.25rem; margin-bottom: 1rem; border-radius: 8px; }
+    legend { font-weight: 700; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    label { display: block; font-weight: 600; margin: .25rem 0; }
+    input, select { width: 100%; padding: .5rem .6rem; border: 1px solid #ccc; border-radius: 6px; }
+    .help { font-size: .85rem; color: #555; margin-top: .25rem; }
+    button { padding: .6rem 1rem; border: 0; border-radius: 8px; cursor: pointer; }
+    button.primary { background: #106ba3; color: #fff; }
+    .out { margin-top: 1rem; padding: .75rem 1rem; background: #f6f8fa; border: 1px solid #e5e7eb; border-radius: 8px; display:none; }
+    footer { margin-top: 2rem; font-size: .9rem; color: #555; }
+  </style>
+</head>
+<body>
+  <h1>Heart Disease Risk — Intake</h1>
+  <p>Collect the same fields used by the dataset. This form is front‑end only — wire it to an API to serve a trained model.</p>
+
+  <form id="heart-form">
+    <fieldset>
+      <legend>Demographics</legend>
+      <div class="row">
+        <div>
+          <label for="age">Age</label>
+          <input id="age" name="age" type="number" min="1" max="120" required />
+        </div>
+        <div>
+          <label for="sex">Sex</label>
+          <select id="sex" name="sex" required>
+            <option value="">Choose…</option>
+            <option value="1">Male</option>
+            <option value="0">Female</option>
+          </select>
+          <div class="help">1 = male, 0 = female</div>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Clinical</legend>
+      <div class="row">
+        <div>
+          <label for="cp">Chest Pain Type (cp)</label>
+          <select id="cp" name="cp" required>
+            <option value="">Choose…</option>
+            <option value="1">Typical angina (1)</option>
+            <option value="2">Atypical angina (2)</option>
+            <option value="3">Non-anginal pain (3)</option>
+            <option value="4">Asymptomatic (4)</option>
+          </select>
+        </div>
+        <div>
+          <label for="trtbps">Resting BP (trtbps, mm Hg)</label>
+          <input id="trtbps" name="trtbps" type="number" min="60" max="260" required />
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="chol">Cholesterol (chol, mg/dl)</label>
+          <input id="chol" name="chol" type="number" min="80" max="600" required />
+        </div>
+        <div>
+          <label for="fbs">Fasting Blood Sugar &gt; 120 mg/dl (fbs)</label>
+          <select id="fbs" name="fbs" required>
+            <option value="">Choose…</option>
+            <option value="1">Yes (1)</option>
+            <option value="0">No (0)</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="restecg">Resting ECG (restecg)</label>
+          <select id="restecg" name="restecg" required>
+            <option value="">Choose…</option>
+            <option value="0">Normal (0)</option>
+            <option value="1">ST-T abnorm. (1)</option>
+            <option value="2">LV hypertrophy (2)</option>
+          </select>
+        </div>
+        <div>
+          <label for="thalachh">Max Heart Rate (thalachh)</label>
+          <input id="thalachh" name="thalachh" type="number" min="60" max="230" required />
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="exng">Exercise Induced Angina (exng)</label>
+          <select id="exng" name="exng" required>
+            <option value="">Choose…</option>
+            <option value="1">Yes (1)</option>
+            <option value="0">No (0)</option>
+          </select>
+        </div>
+        <div>
+          <label for="oldpeak">ST Depression (oldpeak)</label>
+          <input id="oldpeak" name="oldpeak" type="number" step="0.1" min="0" max="10" required />
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="slp">Slope (slp)</label>
+          <select id="slp" name="slp" required>
+            <option value="">Choose…</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+          </select>
+        </div>
+        <div>
+          <label for="caa"># Major Vessels (caa)</label>
+          <select id="caa" name="caa" required>
+            <option value="">Choose…</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="thall">Thalassemia (thall)</label>
+          <select id="thall" name="thall" required>
+            <option value="">Choose…</option>
+            <option value="1">Normal (1)</option>
+            <option value="2">Fixed defect (2)</option>
+            <option value="3">Reversible defect (3)</option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+
+    <button type="submit" class="primary">Preview JSON</button>
+    <button type="reset">Reset</button>
+
+    <div id="out" class="out"></div>
+  </form>
+
+  <footer>
+    <p>This form mirrors the dataset schema so you can collect inputs for a future prediction API.</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById('heart-form');
+    const out  = document.getElementById('out');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      // Convert numeric fields
+      for (const k of ['age','sex','cp','trtbps','chol','fbs','restecg','thalachh','exng','oldpeak','slp','caa','thall']) {
+        data[k] = Number(data[k]);
+      }
+      out.style.display = 'block';
+      out.textContent = JSON.stringify(data, null, 2);
+      // TODO: POST `data` to your model endpoint (FastAPI/Flask) and show the prediction.
+    });
+  </script>
+</body>
+</html>
